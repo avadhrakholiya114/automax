@@ -1,0 +1,32 @@
+# Virtual environment
+venv/
+
+# Django specific
+*.log
+*.pot
+*.pyc
+__pycache__/
+db.sqlite3
+
+
+
+# If you are using SQLite3
+*.sqlite3
+
+# If you are using Docker
+docker-compose.yml
+Dockerfile
+
+# PyCharm
+.idea/
+
+# VS Code
+.vscode/
+
+# Environment variables file
+.env
+
+
+
+# Windows
+Thumbs.db
