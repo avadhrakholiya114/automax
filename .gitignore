@@ -8,7 +8,14 @@ venv/
 __pycache__/
 db.sqlite3
 
-
+automax/automax/wsgi.py
+automax/automax/asgi.py
+automax/automax/__init__.py
+automax/manage.py
+automax/main/__init__.py
+automax/main/tests.py
+automax/main/apps.py
+automax/main/migrations
 
 # If you are using SQLite3
 *.sqlite3
