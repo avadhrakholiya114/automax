@@ -16,7 +16,10 @@ automax/main/__init__.py
 automax/main/tests.py
 automax/main/apps.py
 automax/main/migrations
-
+automax/users/__init__.py
+automax/users/tests.py
+automax/users/apps.py
+automax/users/migrations
 # If you are using SQLite3
 *.sqlite3
 
