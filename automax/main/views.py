@@ -5,6 +5,7 @@ from .forms import ListingForm
 from users.forms import LocationForm 
 from django.contrib import messages
 from django.shortcuts import redirect
+from .filters import ListingFilter
 # Create your views here.
 
 
@@ -15,8 +16,10 @@ def main_view(request):
 @login_required
 def home_view(request):
     listings = Listing.objects.all()
+    listing_filter = ListingFilter(request.GET, queryset=listings)
     context = {
-        'listings': listings,
+       
+        'listing_filter': listing_filter,
        
     }
     return render(request, "views/home.html",context)
