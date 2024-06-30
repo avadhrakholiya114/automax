@@ -50,4 +50,18 @@ def list_view(request):
          Location_Form = LocationForm()
      return render(request, 'views/list.html', {'listing_form': listing_form,'Location_Form': Location_Form})
          
+
+@login_required
+def listing_view(request,id):
+    try:
+        listing = Listing.objects.get(id=id)
+        if listing is None:
+            raise Exception
         
+        return render(request,'views/listing.html', {'listing': listing, })
+    except Exception as e :
+        messages.error(
+                    request, 'An error occured while  the listing.')
+        print(e)
+        return redirect('home')
+    
