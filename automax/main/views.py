@@ -1,12 +1,12 @@
-from django.shortcuts import render,HttpResponse
+from django.shortcuts import render,HttpResponse,get_object_or_404
 from django.contrib.auth.decorators import login_required
-from .models import  Listing
+from .models import  Listing,LikedListing
 from .forms import ListingForm
 from users.forms import LocationForm 
 from django.contrib import messages
 from django.shortcuts import redirect
 from .filters import ListingFilter
-# Create your views here.
+from django.http import JsonResponse
 from imp import reload
 
 def main_view(request):
@@ -17,9 +17,13 @@ def main_view(request):
 def home_view(request):
     listings = Listing.objects.all()
     listing_filter = ListingFilter(request.GET, queryset=listings)
+    user_liked_listings = LikedListing.objects.filter(
+        profile=request.user.profile).values_list('listing')
+    liked_listings_ids = [l[0] for l in user_liked_listings]
     context = {
        
         'listing_filter': listing_filter,
+        'liked_listings_ids': liked_listings_ids,
        
     }
     return render(request, "views/home.html",context)
@@ -103,3 +107,19 @@ def edit_view(request,id):
         messages.error(request,"An something error is occur while updating your listing ")
         return redirect('home')
     
+
+@login_required
+def like_listing_view(request, id):
+    listing = get_object_or_404(Listing, id=id)
+
+    liked_listing, created = LikedListing.objects.get_or_create(
+        profile=request.user.profile, listing=listing)
+
+    if not created:
+        liked_listing.delete()
+    else:
+        liked_listing.save()
+
+    return JsonResponse({
+        'is_liked_by_user': created,
+    })

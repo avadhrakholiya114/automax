@@ -1,10 +1,10 @@
 from django import forms
 
 from .models import Listing
-
+from users.widgets import CustomPictureImageFieldWidget
 
 class ListingForm(forms.ModelForm):
-    image = forms.ImageField()
+    image = forms.ImageField(widget=CustomPictureImageFieldWidget)
 
     class Meta:
         model = Listing
